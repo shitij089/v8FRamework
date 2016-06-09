@@ -15,7 +15,7 @@ import com.qait.automation.TestSessionInitiator;
 import com.qait.automation.utils.YamlReader;
 
 public class Search_Test {
-	
+
 	TestSessionInitiator test;
 	String baseUrl;
 
@@ -25,20 +25,17 @@ public class Search_Test {
 		initVars();
 		test.launchApplication(baseUrl);
 	}
-	
-	@BeforeMethod
-	public void handleTestMethodName(Method method){
-		test.stepStartMessage(method.getName()); 
-	}
 
+	@BeforeMethod
+	public void handleTestMethodName(Method method) {
+		test.stepStartMessage(method.getName());
+	}
 
 	private void initVars() {
 		baseUrl = getYamlValue("baseUrl");
-		
+
 	}
 
-	
-	
 	@AfterMethod
 	public void take_screenshot_on_failure(ITestResult result) {
 		test.takescreenshot.takeScreenShotOnException(result);

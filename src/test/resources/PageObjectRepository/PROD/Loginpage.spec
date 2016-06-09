@@ -2,7 +2,8 @@ Page Title: Search
 
 #Object Definitions
 ====================================================================================
-inp_username 		 	id       loginForm:username
-inp_password            id       loginForm:password
-btn_login               id       loginForm:loginButton
+inp_searchTextBox 	    id       lst-ib
+btn_search                  xpath    //button[@name='btnG']
+user_name			id	name
+pass_key			id	passkey
 ====================================================================================

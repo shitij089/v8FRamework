@@ -3,17 +3,17 @@
 	
 	<test name="Search Test">
 		<classes>
+			<class name="com.qait.demo.tests.LoginTest" />
 			<class name="com.qait.demo.tests.Search_Test" />
-			<class name="com.qait.demo.tests.Search_Test1" />
 		</classes>
 	</test>
 	
-	<test name="Search Test 2">
+	<!-- <test name="Search Test 2">
 		<classes>
 			<class name="com.qait.demo.tests.Search_Test" />
 			<class name="com.qait.demo.tests.Search_Test1" />
 		</classes>
-	</test>
+	</test> -->
 	
 
 </suite>
