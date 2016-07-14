@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -23,6 +24,7 @@ public class LoginTest {
 	TestSessionInitiator test;
 	String baseUrl;
 	String tatocGameBaseUrl;
+	String loginUrl ;
 	DataBaseConnecter connector = new DataBaseConnecter();
 
 	@BeforeClass
@@ -30,68 +32,46 @@ public class LoginTest {
 		test = new TestSessionInitiator(this.getClass().getSimpleName());
 		initVars();
 		// test.launchApplication(baseUrl);
-		test.launchApplication(tatocGameBaseUrl);
+//		test.launchApplication(tatocGameBaseUrl);
+		test.launchApplication(loginUrl);
 	}
 
 	@BeforeMethod
 	public void handleTestMethodName(Method method) {
 		test.stepStartMessage(method.getName());
 	}
-
+   
 	private void initVars() {
 		// baseUrl = getYamlValue("baseUrl");
-		tatocGameBaseUrl = getYamlValue("tatocGameBaseUrl");
+//		tatocGameBaseUrl = getYamlValue("tatocGameBaseUrl");s
+		loginUrl = getYamlValue("loginUrl");
 
 	}
-
-	// @Test
-	// public void Step01_loginTest() {
-	// // test.loginPage.enterLoginCredentials(getYamlValue("username"),
-	// // getYamlValue("password"));
-	// // test.homePage.verifyUserIsOnHomePage();
-	// test.homePage.clickAdvanceCourse();
-	//
-	// // Connect to database
-	// //YamlReader.setYamlFilePath();
-	// connector.connectToDataBase(YamlReader.getYamlValue("database.host"),
-	// YamlReader.getYamlValue("database.name"),
-	// YamlReader.getYamlValue("database.user"),
-	// YamlReader.getYamlValue("database.password"));
-	// // driver.findElement(By.id("GlobalDateTimeText"));
-	// String value = test.getDriver().findElement(By.id("symbol"))
-	// .getAttribute("value");
-	// String query = YamlReader.getYamlValue("database.query1").replace("?",
-	// value);
-	//
-	// ResultSet resultset = connector
-	// .getResultSetOnExecutingASelectQuery(query);
-	//
-	// String userName = null;
-	// String pwd = null;
-	// try {
-	// while (resultset.next()) {
-	// userName = resultset.getString(1);
-	// pwd = resultset.getString(2);
-	// // Do whatever you want to do with these 2 values
-	// }
-	// } catch (Exception ex) {
-	// ex.getMessage();
-	// }
-	// test.loginPage.enterLoginCredentials(userName, pwd);
-	//
-	// }
-
-	@Test
-	public void testTatocGame() {
-
-		test.homePage.clickGame();
+      
+	@Test()
+	public void testLogin(){
+		test.loginPage.enterLoginCredentials(getYamlValue("loginUser"), getYamlValue("loginPassword"));
+		boolean actual = true ;
+		Assert.assertEquals(actual, true);
+		
 		
 	}
-
-	@AfterMethod
-	public void take_screenshot_on_failure(ITestResult result) {
-		test.takescreenshot.takeScreenShotOnException(result);
+	@Test(dependsOnMethods = { "testLogin"} )
+	public void testCompose(){
+		test.homePage.composeMail(getYamlValue("loginUser"));
 	}
+//	@Test
+//	public void testTatocGame() {
+//
+//		test.homePage.clickGame();
+//		
+//	}
+
+
+//	@AfterMethod
+//	public void take_screenshot_on_failure(ITestResult result) {
+//		test.takescreenshot.takeScreenShotOnException(result);
+//	}
 
 	@AfterClass
 	public void close_Test_Session() {

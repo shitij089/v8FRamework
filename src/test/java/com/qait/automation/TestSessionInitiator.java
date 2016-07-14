@@ -43,15 +43,15 @@ public class TestSessionInitiator {
 	public LoginPageActions loginPage;
 	
 	public TakeScreenshot takescreenshot;
-
 	public WebDriver getDriver() {
 		return this.driver;
 	}
 
 	private void _initPage() {
+		loginPage = new LoginPageActions(driver);
 		homePage = new HomePageActions(driver);
 		resultPage = new ResultsPageActions(driver);
-		loginPage = new LoginPageActions(driver);
+		
 	}
 
 	/**
@@ -69,7 +69,6 @@ public class TestSessionInitiator {
 		_initPage();
 		takescreenshot = new TakeScreenshot(testname, this.driver);
 	}
-
 	private void _configureBrowser() {
 		driver = wdfactory.getDriver(_getSessionConfig());
 		driver.manage().window().maximize();
@@ -93,11 +92,11 @@ public class TestSessionInitiator {
 		launchApplication(getYamlValue("app_url"));
 	}
 
-	public void launchApplication(String baseurl) {
-		Reporter.log("\nThe application url is :- " + baseurl, true);
+	public void launchApplication(String loginUrl) {
+		Reporter.log("\nThe application url is :- " + loginUrl, true);
 		Reporter.log("The test browser is :- " + _getSessionConfig().get("browser") + "\n", true);
 		driver.manage().deleteAllCookies();
-		driver.get(baseurl);
+		driver.get(loginUrl);
 	}
 
 	public void openUrl(String url) {

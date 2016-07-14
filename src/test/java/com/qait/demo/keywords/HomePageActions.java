@@ -1,6 +1,8 @@
 package com.qait.demo.keywords;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.testng.Assert;
 
 import com.qait.automation.getpageobjects.GetPage;
 import com.qait.automation.utils.YamlReader;
@@ -27,6 +30,25 @@ public class HomePageActions extends GetPage {
 
 	}
 
+	public void composeMail(String receiverEmail){
+		element("compose_mail").click();
+		System.out.println(receiverEmail);
+		Date date = new Date();
+		Timestamp ts = new Timestamp(date.getTime());
+		element("receiver_email").sendKeys(receiverEmail);
+		String timestamp = ts.toGMTString();
+		element("subject").sendKeys(timestamp);
+//		sendKeys(ts.toGMTString());
+		element("send_btn").click();
+		element("sent_mails").click();
+//		StringBuffer sb = new StringBuffer();
+		String str= "//span[normalize-space(text())='" +timestamp +"']";
+		WebElement span_text = driver.findElement(By.xpath(str));
+		String timeMail = span_text.getText();
+		Assert.assertEquals(timestamp, timeMail);
+		logMessage("mail with subject" +timestamp +"successfully sent" );
+		
+	}
 	public void verifyUserIsOnHomePage() {
 		wait.waitForPageToLoadCompletely();
 		isElementDisplayed("txt_lastLogin");

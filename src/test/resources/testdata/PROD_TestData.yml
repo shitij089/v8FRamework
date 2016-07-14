@@ -2,8 +2,12 @@ baseUrl: http://uat-s2demo.peoplestrong.com/
 username: "DM11163"
 password: "demo"
 
+loginUrl: http://webmail.qainfotech.com
+loginUser: abdullatasleem@qainfotech.com
+loginPassword: abdul_TAS27
 homePage: 
   searchTerm: thanks
+  toEmail: abdullatasleem@qainfotech.com
 
 resultPage:
   resultText: results
