@@ -71,7 +71,7 @@ public class TestSessionInitiator {
 	}
 	private void _configureBrowser() {
 		driver = wdfactory.getDriver(_getSessionConfig());
-		driver.manage().window().maximize();
+		//driver.manage().window().maximize();
 		driver.manage()
 				.timeouts()
 				.implicitlyWait(Integer.parseInt(getProperty("timeout")),
