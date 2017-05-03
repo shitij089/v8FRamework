@@ -25,7 +25,7 @@ public class YamlReader {
 	public static String setYamlFilePath() {
 		String tier = getProperty("Config.properties", "tier").trim();
 
-		if (tier.equalsIgnoreCase("stg")) {
+		if (tier.equalsIgnoreCase("stg") || tier.equalsIgnoreCase("stage")) {
 			yamlFilePath = "src/test/resources/testdata/STG_TestData.yml";
 		} else if (tier.equalsIgnoreCase("qa")) {
 			yamlFilePath = "src/test/resources/testdata/QA_TestData.yml";

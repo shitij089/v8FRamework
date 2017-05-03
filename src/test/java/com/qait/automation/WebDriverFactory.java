@@ -20,79 +20,77 @@ import org.openqa.selenium.safari.SafariDriver;
 
 public class WebDriverFactory {
 
-    private static String browser;
-    private static final DesiredCapabilities capabilities = new DesiredCapabilities();
+	private static String browser;
+	private static final DesiredCapabilities capabilities = new DesiredCapabilities();
 
-    public WebDriver getDriver(Map<String, String> seleniumconfig) {
-        browser = seleniumconfig.get("browser");
+	public WebDriver getDriver(Map<String, String> seleniumconfig) {
+		browser = seleniumconfig.get("browser");
 
-        if (seleniumconfig.get("seleniumserver").equalsIgnoreCase("local")) {
-            if (browser.equalsIgnoreCase("firefox")) {
-                return getFirefoxDriver();
-            } else if (browser.equalsIgnoreCase("chrome")) {
-                return getChromeDriver(seleniumconfig.get("driverpath"));
-            } else if (browser.equalsIgnoreCase("Safari")) {
-                return getSafariDriver();
-            } else if ((browser.equalsIgnoreCase("ie"))
-                    || (browser.equalsIgnoreCase("internetexplorer"))
-                    || (browser.equalsIgnoreCase("internet explorer"))) {
-                return getInternetExplorerDriver(seleniumconfig.get("driverpath"));
-            }
-        }
-        if (seleniumconfig.get("seleniumserver").equalsIgnoreCase("remote")) {
-            return setRemoteDriver(seleniumconfig);
-        }
-        return new FirefoxDriver();
-    }
+		if (seleniumconfig.get("seleniumserver").equalsIgnoreCase("local")) {
+			if (browser.equalsIgnoreCase("firefox")) {
+				return getFirefoxDriver();
+			} else if (browser.equalsIgnoreCase("chrome")) {
+				return getChromeDriver(seleniumconfig.get("driverpath"));
+			} else if (browser.equalsIgnoreCase("Safari")) {
+				return getSafariDriver();
+			} else if ((browser.equalsIgnoreCase("ie")) || (browser.equalsIgnoreCase("internetexplorer"))
+					|| (browser.equalsIgnoreCase("internet explorer"))) {
+				return getInternetExplorerDriver(seleniumconfig.get("driverpath"));
+			}
+		}
+		if (seleniumconfig.get("seleniumserver").equalsIgnoreCase("remote")) {
+			return setRemoteDriver(seleniumconfig);
+		}
+		return new FirefoxDriver();
+	}
 
-    private WebDriver setRemoteDriver(Map<String, String> selConfig) {
-        DesiredCapabilities cap = null;
-        browser = selConfig.get("browser");
-        if (browser.equalsIgnoreCase("firefox")) {
-            cap = DesiredCapabilities.firefox();
-        } else if (browser.equalsIgnoreCase("chrome")) {
-            cap = DesiredCapabilities.chrome();
-        } else if (browser.equalsIgnoreCase("Safari")) {
-            cap = DesiredCapabilities.safari();
-        } else if ((browser.equalsIgnoreCase("ie"))
-                || (browser.equalsIgnoreCase("internetexplorer"))
-                || (browser.equalsIgnoreCase("internet explorer"))) {
-            cap = DesiredCapabilities.internetExplorer();
-        }
-        String seleniuhubaddress = selConfig.get("seleniumserverhost");
-        URL selserverhost = null;
-        try {
-            selserverhost = new URL(seleniuhubaddress);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        cap.setJavascriptEnabled(true);
-        return new RemoteWebDriver(selserverhost, cap);
-    }
+	private WebDriver setRemoteDriver(Map<String, String> selConfig) {
+		DesiredCapabilities cap = null;
+		browser = selConfig.get("browser");
+		if (browser.equalsIgnoreCase("firefox")) {
+			cap = DesiredCapabilities.firefox();
+		} else if (browser.equalsIgnoreCase("chrome")) {
+			cap = DesiredCapabilities.chrome();
+		} else if (browser.equalsIgnoreCase("Safari")) {
+			cap = DesiredCapabilities.safari();
+		} else if ((browser.equalsIgnoreCase("ie")) || (browser.equalsIgnoreCase("internetexplorer"))
+				|| (browser.equalsIgnoreCase("internet explorer"))) {
+			cap = DesiredCapabilities.internetExplorer();
+		}
+		String seleniuhubaddress = selConfig.get("seleniumserverhost");
+		URL selserverhost = null;
+		try {
+			selserverhost = new URL(seleniuhubaddress);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		cap.setJavascriptEnabled(true);
+		return new RemoteWebDriver(selserverhost, cap);
+	}
 
-    private static WebDriver getChromeDriver(String driverpath) {
-        System.setProperty("webdriver.chrome.driver", driverpath);
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--test-type");
-        DesiredCapabilities cap = DesiredCapabilities.chrome();
-        cap.setCapability(ChromeOptions.CAPABILITY, options);
-        return new ChromeDriver(cap);
-    }
+	private static WebDriver getChromeDriver(String driverpath) {
+		System.setProperty("webdriver.chrome.driver", driverpath + "/chromedriver.exe");
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--test-type");
+		DesiredCapabilities cap = DesiredCapabilities.chrome();
+		cap.setCapability(ChromeOptions.CAPABILITY, options);
+		return new ChromeDriver(cap);
+	}
 
-    private static WebDriver getInternetExplorerDriver(String driverpath) {
-        System.setProperty("webdriver.ie.driver", driverpath);
-        capabilities.setCapability("ignoreZoomSetting", true);
-        capabilities.setCapability("ignoreZoomLevel", true);
-        return new InternetExplorerDriver(capabilities);
-    }
+	private static WebDriver getInternetExplorerDriver(String driverpath) {
+		System.setProperty("webdriver.ie.driver", driverpath);
+		capabilities.setCapability("ignoreZoomSetting", true);
+		capabilities.setCapability("ignoreZoomLevel", true);
+		return new InternetExplorerDriver(capabilities);
+	}
 
-    private static WebDriver getSafariDriver() {
-        return new SafariDriver();
-    }
+	private static WebDriver getSafariDriver() {
+		return new SafariDriver();
+	}
 
-    private static WebDriver getFirefoxDriver() {
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("browser.cache.disk.enable", false);
-        return new FirefoxDriver(profile);
-    }
+	private static WebDriver getFirefoxDriver() {
+		FirefoxProfile profile = new FirefoxProfile();
+		profile.setPreference("browser.cache.disk.enable", false);
+		return new FirefoxDriver(profile);
+	}
 }
