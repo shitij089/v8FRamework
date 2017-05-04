@@ -61,4 +61,16 @@ public class ComputerDatabaseActions extends GetPage {
 		return driver.findElement(By.cssSelector("td>a")).getText().trim();
 	}
 
+	public boolean addComputerfromFront(String name) {
+		element("add-computer").click();
+		element("computer-name").sendKeys(name);
+		element("computer-introduced-date").sendKeys("2017-05-04");
+		element("computer-discontinued").sendKeys("2017-05-30");
+		wait.hardWait(1);
+		selectProvidedTextFromDropDown(element("company-dropdown"), "Apple Inc.");
+		element("save").click();
+		logMessage("[TEST PASSED]: Computer Added successfully");
+		return true;
+	}
+
 }
