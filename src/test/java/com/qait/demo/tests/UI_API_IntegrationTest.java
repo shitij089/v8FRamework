@@ -46,22 +46,21 @@ public class UI_API_IntegrationTest {
 	@Test
 	public void Test02_GET_COUNT_OF_COMPUTERS_FOUND_THROUGH_UI_BEFORE_ADD_COMPUTER_API_INVOKE() {
 		count = test.databaseActions.getTotalCountOfComputerThroughUI();
-		System.out.println("TOTAL COUNT PRIOR TO ADD COMPUTER API CALL IS : " + count);
 	}
 
 	private String name;
 
 	@Test
-	public void Test03_ADD_COMPUTERS_USING_API_() {
+	public void Test03_Add_a_Computer() {
 		name = "TEST" + System.currentTimeMillis();
-		System.out.println("COMPUTER NAME IS : " + name);
 		Assert.assertTrue(test.databaseActions.addComputerThroughAPI(name));
 	}
 
 	@Test
-	public void Test04_VALIDATE_COMPUTER_IS_ADDED_SUCCESSFULLY_THROUGH_API() {
+	public void Test04_VALIDATE_COMPUTER_IS_ADDED_SUCCESSFULLY_THROUGH_API_() {
 		Assert.assertEquals(name, test.databaseActions.validateComputerIsCreatedSuccessfully(name));
 	}
+	
 
 	@AfterMethod
 	public void take_screenshot_on_failure(ITestResult result) {

@@ -30,8 +30,10 @@ public class ComputerDatabaseActions extends GetPage {
 	}
 
 	public int getTotalCountOfComputerThroughUI() {
-		return Integer
+	 int number=Integer
 				.parseInt(CharMatcher.digit().retainFrom(driver.findElement(By.cssSelector("#main>h1")).getText()));
+	 logMessage("[TEST PASSED]: Number Of Mahcines before addition:"+number);
+	 return number;
 	}
 
 	public boolean addComputerThroughAPI(String name) {
@@ -52,15 +54,13 @@ public class ComputerDatabaseActions extends GetPage {
 	}
 
 	public String validateComputerIsCreatedSuccessfully(String computerName) {
-		WebElement searchbox = driver.findElement(By.cssSelector("#searchbox"));
-		searchbox.clear();
-		searchbox.sendKeys(computerName);
-		
-		driver.findElement(By.cssSelector("#searchsubmit")).click();
-		return driver.findElement(By.cssSelector("td>a")).getText().trim();
+		element("search-field").clear();
+		element("search-field").sendKeys(computerName);
+		element("search-submit").click();
+		return element("search-result").getText().trim();
 	}
 
-	public boolean addComputerfromFront(String name) {
+	public boolean addComputerfromFrontend(String name) {
 		element("add-computer").click();
 		wait.hardWait(1);
 		element("computer-name").sendKeys(name);
