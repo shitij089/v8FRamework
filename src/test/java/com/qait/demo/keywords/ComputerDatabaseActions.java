@@ -71,7 +71,6 @@ public class ComputerDatabaseActions extends GetPage {
 		wait.hardWait(1);
 		selectProvidedTextFromDropDown(element("company-dropdown"), "Apple Inc.");
 		element("save").click();
-		logMessage("[TEST PASSED]: Computer Added successfully");
 		return true;
 	}
 

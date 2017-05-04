@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -18,11 +19,12 @@ public class UI_API_IntegrationTest {
 
 	TestSessionInitiator test;
 	String baseUrl;
+	private String name;
 
 	@BeforeClass
 	public void Start_Test_Session() {
 		test = new TestSessionInitiator(this.getClass().getSimpleName());
-		initVars();
+		baseUrl = getYamlValue("baseUrl");
 	}
 
 	@BeforeMethod
@@ -30,43 +32,22 @@ public class UI_API_IntegrationTest {
 		test.stepStartMessage(method.getName());
 	}
 
-	private void initVars() {
-		baseUrl = getYamlValue("baseUrl");
-
-	}
 
 	@Test
-	public void Test01_Launch_Base_URL_Of_Application() {
+	public void Add_Computer_Test() {
 		Assert.assertEquals(test.databaseActions.launchBaseURL(baseUrl), "Computers database",
 				"Application is not launched successfully.");
-	}
-
-	private int count;
-
-	@Test
-	public void Test02_GET_COUNT_OF_COMPUTERS_FOUND_THROUGH_UI_BEFORE_ADD_COMPUTER_API_INVOKE() {
-		count = test.databaseActions.getTotalCountOfComputerThroughUI();
-	}
-
-	private String name;
-
-	@Test
-	public void Test03_Add_a_Computer() {
 		name = "TEST" + System.currentTimeMillis();
 		Assert.assertTrue(test.databaseActions.addComputerThroughAPI(name));
-	}
-
-	@Test
-	public void Test04_VALIDATE_COMPUTER_IS_ADDED_SUCCESSFULLY_THROUGH_API_() {
+		Reporter.log("[INFO]: Added a computer with name using webservice: "+name);
 		Assert.assertEquals(name, test.databaseActions.validateComputerIsCreatedSuccessfully(name));
+		Reporter.log("[TEST PASSED]: Computer with name: "+name+" added is displayed on searching");
 	}
-	
 
 	@AfterMethod
 	public void take_screenshot_on_failure(ITestResult result) {
 		test.takescreenshot.takeScreenShotOnException(result);
 	}
-
 	@AfterClass
 	public void close_Test_Session() {
 		test.closeBrowserSession();
