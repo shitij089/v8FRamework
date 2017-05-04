@@ -24,17 +24,12 @@ public class UI_Test {
 	@BeforeClass
 	public void Start_Test_Session() {
 		test = new TestSessionInitiator(this.getClass().getSimpleName());
-		initVars();
+		baseUrl =getYamlValue("baseUrl");
 	}
 
 	@BeforeMethod
 	public void handleTestMethodName(Method method) {
 		test.stepStartMessage(method.getName());
-	}
-
-	private void initVars() {
-		baseUrl = getYamlValue("baseUrl");
-
 	}
 
 	@Test
@@ -43,23 +38,13 @@ public class UI_Test {
 				"Application is not launched successfully.");
 		name = "TEST" + System.currentTimeMillis();
 		Assert.assertTrue(test.databaseActions.addComputerfromFrontend(name));
+		Reporter.log("[INFO]: Added a computer with name: "+name);
 		Assert.assertEquals(name, test.databaseActions.validateComputerIsCreatedSuccessfully(name));
-		Reporter.log("[Computer added is displayed on searching]");
+		Reporter.log("[TEST PASSED]: Computer with name: "+name+" added is displayed on searching");
 	}
 
-//	
-//
-//	@Test
-//	public void Test02_ADD_Using_FrontEnd_() {
-//		name = "TEST" + System.currentTimeMillis();
-//		Assert.assertTrue(test.databaseActions.addComputerfromFront(name));
-//	}
-//
-//	@Test
-//	public void Test03_VALIDATE_COMPUTER_IS_ADDED_SUCCESSFULLY_THROUGH_API() {
-//		Assert.assertEquals(name, test.databaseActions.validateComputerIsCreatedSuccessfully(name));
-//	}
-
+	
+	
 	@AfterMethod
 	public void take_screenshot_on_failure(ITestResult result) {
 		test.takescreenshot.takeScreenShotOnException(result);
