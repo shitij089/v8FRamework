@@ -37,19 +37,18 @@ public class ComputerDatabaseActions extends GetPage {
 	public boolean addComputerThroughAPI(String name) {
 		RequestSpecification resSpec = given()
 				.config(RestAssured.config().redirect(redirectConfig().followRedirects(false)));
-
 		String finalURI = "http://computer-database.gatling.io/computers";
-
 		HashMap<String, String> payload = new HashMap<>();
 		payload.put("name", name);
 		payload.put("introduced", "2017-05-03");
 		payload.put("discontinued", "2017-07-03");
 		payload.put("company", "2");
-
 		Response response = resSpec.given().contentType(ContentType.JSON).with().body(payload).when().post(finalURI)
 				.then().statusCode(303).extract().response();
 
-		return response.getHeader("Set-Cookie").contains("success=Computer+" + name);
+		boolean b =response.getHeader("Set-Cookie").contains("success=Computer+" + name);
+		logMessage("[API TEST PASSED]: Computer Created: "+name);
+		return b;
 	}
 
 	public String validateComputerIsCreatedSuccessfully(String computerName) {
