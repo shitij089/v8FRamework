@@ -63,8 +63,11 @@ public class ComputerDatabaseActions extends GetPage {
 
 	public boolean addComputerfromFront(String name) {
 		element("add-computer").click();
+		wait.hardWait(1);
 		element("computer-name").sendKeys(name);
+		wait.hardWait(1);
 		element("computer-introduced-date").sendKeys("2017-05-04");
+		wait.hardWait(1);
 		element("computer-discontinued").sendKeys("2017-05-30");
 		wait.hardWait(1);
 		selectProvidedTextFromDropDown(element("company-dropdown"), "Apple Inc.");
