@@ -3,8 +3,7 @@
 	
 	<test name="Search Test">
 		<classes>
-			<class name="com.qait.demo.tests.LoginTest" />
-			<class name="com.qait.demo.tests.Search_Test" />
+			<class name="com.qait.demo.tests.TestClass" />
 		</classes>
 	</test>
 	

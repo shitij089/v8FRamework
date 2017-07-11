@@ -8,12 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import com.qait.demo.keywords.HRISHomePageAction;
+import com.qait.demo.keywords.HrisLoginPageAction;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Reporter;
 
 import com.qait.automation.utils.TakeScreenshot;
-import com.qait.demo.keywords.ComputerDatabaseActions;
+import com.qait.demo.keywords.HomePageAction;
+import com.qait.demo.keywords.LoginPageAction;
 
 public class TestSessionInitiator {
 
@@ -34,16 +37,24 @@ public class TestSessionInitiator {
 	 * Initiating the page objects
 	 * 
 	 */
-	public ComputerDatabaseActions databaseActions;
 
 	public TakeScreenshot takescreenshot;
+	public LoginPageAction loginPageAction;
+	public HomePageAction homePageAction;
+	public HrisLoginPageAction hrisLoginPageAction;
+	private HRISHomePageAction hrisHomePageAction;
 
 	public WebDriver getDriver() {
 		return this.driver;
 	}
 
 	private void _initPage() {
-		databaseActions = new ComputerDatabaseActions(driver);
+	loginPageAction = new LoginPageAction(driver);
+	homePageAction = new HomePageAction(driver);
+	hrisLoginPageAction = new HrisLoginPageAction(driver);
+	hrisHomePageAction = new HRISHomePageAction(driver);
+
+
 	}
 
 	/**
@@ -78,7 +89,7 @@ public class TestSessionInitiator {
 	}
 
 	public void launchApplication() {
-		launchApplication(getYamlValue("app_url"));
+		launchApplication(getYamlValue("baseUrl_hris"));
 	}
 
 	public void launchApplication(String loginUrl) {
@@ -87,6 +98,7 @@ public class TestSessionInitiator {
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 		driver.get(loginUrl);
+		
 	}
 
 	public void openUrl(String url) {

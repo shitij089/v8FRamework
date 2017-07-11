@@ -91,6 +91,14 @@ public class WebDriverFactory {
 	private static WebDriver getFirefoxDriver() {
 		FirefoxProfile profile = new FirefoxProfile();
 		profile.setPreference("browser.cache.disk.enable", false);
+		if(System.getProperty("os.name").contains("Windows"))
+		{
+			System.setProperty("webdriver.gecko.driver",
+					"./Drivers/geckodriver.exe");
+		}
+		else{
+		System.setProperty("webdriver.gecko.driver",
+				"./Drivers/geckodriver"); }
 		return new FirefoxDriver(profile);
 	}
 }

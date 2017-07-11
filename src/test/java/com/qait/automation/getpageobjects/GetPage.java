@@ -100,27 +100,27 @@ public class GetPage extends BaseUi {
     }
 
     protected void _waitForElementToDisappear(String elementToken, String replacement) {
-    	int i = 0;
+        int i = 0;
         int initTimeout = wait.getTimeout();
         wait.resetImplicitTimeout(2);
         int count;
         while (i <= 20) {
-        	if (replacement.isEmpty()) count = elements(elementToken).size();
-        	else count = elements(elementToken, replacement).size();
-        	if (count == 0) break;
-        	i += 2;
+            if (replacement.isEmpty()) count = elements(elementToken).size();
+            else count = elements(elementToken, replacement).size();
+            if (count == 0) break;
+            i += 2;
         }
         wait.resetImplicitTimeout(initTimeout);
     }
 
-    protected void waitForElementToDisappear(String elementToken){
-		_waitForElementToDisappear(elementToken, "");
-	}
+    protected void waitForElementToDisappear(String elementToken) {
+        _waitForElementToDisappear(elementToken, "");
+    }
 
-    protected void waitForElementToDisappear(String elementToken, String replacement){
-		_waitForElementToDisappear(elementToken, replacement);
-	}
-    
+    protected void waitForElementToDisappear(String elementToken, String replacement) {
+        _waitForElementToDisappear(elementToken, replacement);
+    }
+
     protected void isStringMatching(String actual, String expected) {
         Assert.assertEquals(actual, expected);
         logMessage("ACTUAL STRING : " + actual);
@@ -129,7 +129,7 @@ public class GetPage extends BaseUi {
     }
 
     protected boolean isElementDisplayed(String elementName,
-            String elementTextReplace) {
+                                         String elementTextReplace) {
         wait.waitForElementToBeVisible(element(elementName, elementTextReplace));
         boolean result = element(elementName, elementTextReplace).isDisplayed();
         assertTrue(result, "TEST FAILED: element '" + elementName
@@ -143,14 +143,14 @@ public class GetPage extends BaseUi {
         wait.waitForElementToBeVisible(element(elementName));
         assertEquals(element(elementName).getText().trim(), expectedText,
                 "TEST FAILED: element '" + elementName
-                + "' Text is not as expected: ");
+                        + "' Text is not as expected: ");
         logMessage("TEST PASSED: element " + elementName
                 + " is visible and Text is " + expectedText);
     }
-    
+
     protected void verifyElementTextContains(String elementName, String expectedText) {
         wait.waitForElementToBeVisible(element(elementName));
-        assertThat("TEST FAILED: element '" + elementName + "' Text is not as expected: ", 
+        assertThat("TEST FAILED: element '" + elementName + "' Text is not as expected: ",
                 element(elementName).getText().trim(), containsString(expectedText));
         logMessage("TEST PASSED: element " + elementName
                 + " is visible and Text is " + expectedText);
